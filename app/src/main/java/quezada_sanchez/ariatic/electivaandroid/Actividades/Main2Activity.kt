@@ -5,17 +5,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main2.*
 import quezada_sanchez.ariatic.electivaandroid.R
 import vo.Estudiante
 import java.util.*
 
-class Main2Activity : AppCompatActivity() {
 
+
+class Main2Activity : AppCompatActivity()
+{
     lateinit var estudiante:Estudiante
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
@@ -59,6 +61,20 @@ class Main2Activity : AppCompatActivity() {
         Log.v("Main", "Pasar a ventana dos")
         val intent = Intent(this, Main3Activity::class.java)
         intent.putExtra("Parcelable", estudiante)
-        startActivity(intent)
+        startActivityForResult(intent,1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data:
+    Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val resultado = data?.getExtras()?.getString("RESULTADO")
+
+
+        if (resultCode == RESULT_OK)
+        {
+            var resultado = data?.getParcelableExtra("Parcelable") as Estudiante
+            var nombre:String = resultado.nombre
+            Toast.makeText(this, "Se recibio como respuesta un estudiante de nombre $nombre", Toast.LENGTH_LONG).show()
+        }
     }
 }

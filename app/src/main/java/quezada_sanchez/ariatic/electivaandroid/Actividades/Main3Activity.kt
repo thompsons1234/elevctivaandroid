@@ -2,17 +2,19 @@ package quezada_sanchez.ariatic.electivaandroid.Actividades
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main3.*
 import quezada_sanchez.ariatic.electivaandroid.R
 import vo.Estudiante
 
 class Main3Activity : AppCompatActivity() {
+    lateinit var estudiante:Estudiante
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main3)
 
-        var estudiante = intent.getParcelableExtra<Estudiante>("Parcelable")
+        estudiante = intent.getParcelableExtra<Estudiante>("Parcelable")
 
 
         actity3_textview_nombre.text = estudiante.nombre
@@ -30,5 +32,14 @@ class Main3Activity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onBackPressed()
+    {
+        val i = getIntent()
+        i.putExtra("Parcelable", estudiante)
+        setResult(RESULT_OK, i)
+        finish()
+        super.onBackPressed()
     }
 }
